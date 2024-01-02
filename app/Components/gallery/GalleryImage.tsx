@@ -24,7 +24,7 @@ export default function GalleryImage({ image }: { image: string }) {
       <div
         className={`absolute inset-0 flex justify-center items-center ${display}`}
       >
-        <IoMdHeart size={80} className="opacity-1" />
+        <IoMdHeart size={80} className="opacity-1 hover:text-red" />
       </div>
       <User display={display} />
     </motion.div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "./Components/Header";
-import { ThemeProvider } from "next-themes";
-import Provider from "./ThemeProvider";
+
+import Provider from "./Provider";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 

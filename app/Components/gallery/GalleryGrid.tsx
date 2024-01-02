@@ -1,5 +1,5 @@
 import GalleryImage from "./GalleryImage";
-
+import AddButton from "./AddButton";
 export default function GalleryGrid() {
   const images = [
     "https://images.unsplash.com/photo-1599837565318-67429bde7162?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGRldmVsb3BlciUyMHNldHVwc3xlbnwwfHwwfHx8MA%3D%3D",
@@ -14,12 +14,13 @@ export default function GalleryGrid() {
   ];
 
   return (
-    <div>
-      <div className="columns-1 sm:columns-2 md:columns-2 lg:columns-3 gap-4 space-y-4 ">
+    <div className=" ">
+      <div className="columns-1 sm:columns-2 md:columns-2 lg:columns-3 gap-4 space-y-4 p-3 md:p-0 ">
         {images.map((image, index) => (
           <GalleryImage image={image} />
         ))}
       </div>
+      <AddButton />
     </div>
   );
 }
