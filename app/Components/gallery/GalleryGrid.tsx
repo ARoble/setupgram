@@ -17,7 +17,7 @@ export default function GalleryGrid() {
     <div className=" ">
       <div className="columns-1 sm:columns-2 md:columns-2 lg:columns-3 gap-4 space-y-4 p-3 md:p-0 ">
         {images.map((image, index) => (
-          <GalleryImage image={image} />
+          <GalleryImage image={image} key={index} />
         ))}
       </div>
       <AddButton />

@@ -48,7 +48,7 @@ export default function Login() {
               {({
                 imageList,
                 onImageUpload,
-                onImageUpdate,
+
                 onImageRemove,
                 isDragging,
                 dragProps,
