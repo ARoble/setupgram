@@ -15,7 +15,7 @@ export default function Header() {
         {session ? (
           <div className="flex items-center space-x-2">
             <Image
-              src={session?.user?.image}
+              src={session?.user?.image as string}
               alt="profile image"
               className="h-9 rounded-full"
               height={36}
