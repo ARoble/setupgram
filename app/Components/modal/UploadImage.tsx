@@ -4,20 +4,23 @@ import { Context } from "@/app/Hooks/context";
 import ImageUploading from "react-images-uploading";
 import { IoCloseSharp } from "react-icons/io5";
 import { SlCursor } from "react-icons/sl";
+import { uploadSetup } from "@/app/Utilities/fetch";
 
 export default function UploadImage() {
   const { setModal } = useContext(Context);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<any[]>([]);
   const maxNumber = 69;
 
-  const onChange = (imageList: [], addUpdateIndex: []) => {
+  const onChange = (imageList: []) => {
     // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
   const uploadImage = () => {
-    console.log(images);
+    if (images.length === 0) return;
+    const formData = new FormData();
+    formData.append("image", images[0]?.file);
+    uploadSetup(formData);
   };
   return (
     <div className="bg-black   w-[400px] rounded-md">
