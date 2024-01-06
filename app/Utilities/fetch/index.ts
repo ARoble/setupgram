@@ -6,7 +6,7 @@ export async function uploadSetup(formData: FormData) {
       "Content-Type": "multipart/form-data",
     },
     onUploadProgress: (event) => {
-      return Math.round(100 * event.loaded) / event.total;
+      return Math.round(100 * event.loaded) / event.total!;
     },
   });
   console.log(res);

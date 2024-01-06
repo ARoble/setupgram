@@ -2,7 +2,9 @@ export type SetupProps = {
   id: string;
   image: string;
   user: {
-    image: string;
+    id: string;
     name: string;
+    email: string;
+    image: string;
   };
 };

@@ -3,13 +3,19 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { IoMdHeart } from "react-icons/io";
 import User from "./User";
-
+import Skeleton from "react-loading-skeleton";
+import { UserProps } from "@/app/Types/UserProps";
 export default function GalleryImage({
   setup,
 }: {
-  setup: { image: string; user: {} };
+  setup: {
+    image: string;
+    user: UserProps;
+  };
 }) {
   const [display, setDisplay] = useState("hidden");
+  const [loading, setLoading] = useState(true);
+
   return (
     <motion.div
       className="hover:cursor-pointer relative "
@@ -24,13 +30,21 @@ export default function GalleryImage({
         setDisplay("hidden");
       }}
     >
-      <img className="rounded-md" src={setup.image} />
+      {loading && <Skeleton className="h-[250px]" />}
+      <img
+        className={`rounded-md ${loading ? "hidden" : "block"} min-w-[100%]`}
+        src={setup.image}
+        onLoad={() => {
+          setLoading(false);
+        }}
+      />
+
       <div
         className={`absolute inset-0 flex justify-center items-center ${display}`}
       >
         <IoMdHeart size={80} className="opacity-1 hover:text-red" />
       </div>
-      <User display={display} user={setup.user} />
+      <User display={display} userInfo={setup.user} />
     </motion.div>
   );
 }

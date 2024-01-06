@@ -8,6 +8,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "setupgram.s3.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "setupgram.s3.eu-north-1.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

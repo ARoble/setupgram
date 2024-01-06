@@ -4,7 +4,7 @@ import Header from "./Components/Header";
 import Provider from "./Provider";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
-
+import "react-loading-skeleton/dist/skeleton.css";
 const inter = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

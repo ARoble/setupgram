@@ -3,7 +3,7 @@ import AddButton from "./AddButton";
 import { fetchSetups } from "@/app/Utilities/fetch";
 import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { SetupProps } from "@/app/Types/setupProps";
+import { SetupProps } from "../../Types/SetupProps";
 export default function GalleryGrid() {
   const { isLoading, data: setups } = useQuery({
     queryKey: ["setups"],
