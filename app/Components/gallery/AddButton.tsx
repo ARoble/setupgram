@@ -1,3 +1,5 @@
+"use client";
+
 import { IoMdAdd } from "react-icons/io";
 import { useContext } from "react";
 import { Context } from "@/app/Hooks/context";

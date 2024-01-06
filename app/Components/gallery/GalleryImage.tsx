@@ -4,7 +4,11 @@ import { useState } from "react";
 import { IoMdHeart } from "react-icons/io";
 import User from "./User";
 
-export default function GalleryImage({ image }: { image: string }) {
+export default function GalleryImage({
+  setup,
+}: {
+  setup: { image: string; user: {} };
+}) {
   const [display, setDisplay] = useState("hidden");
   return (
     <motion.div
@@ -20,13 +24,13 @@ export default function GalleryImage({ image }: { image: string }) {
         setDisplay("hidden");
       }}
     >
-      <img className="rounded-md" src={image} />
+      <img className="rounded-md" src={setup.image} />
       <div
         className={`absolute inset-0 flex justify-center items-center ${display}`}
       >
         <IoMdHeart size={80} className="opacity-1 hover:text-red" />
       </div>
-      <User display={display} />
+      <User display={display} user={setup.user} />
     </motion.div>
   );
 }

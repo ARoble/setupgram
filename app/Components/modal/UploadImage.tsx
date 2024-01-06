@@ -5,14 +5,25 @@ import ImageUploading from "react-images-uploading";
 import { IoCloseSharp } from "react-icons/io5";
 import { SlCursor } from "react-icons/sl";
 import { uploadSetup } from "@/app/Utilities/fetch";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TailSpin } from "react-loader-spinner";
 
 export default function UploadImage() {
   const { setModal } = useContext(Context);
   const [images, setImages] = useState<any[]>([]);
   const maxNumber = 69;
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (formData: FormData) => {
+      return uploadSetup(formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["setups"] });
+      setModal(false);
+    },
+  });
 
   const onChange = (imageList: []) => {
-    // data for submit
     setImages(imageList);
   };
 
@@ -20,10 +31,10 @@ export default function UploadImage() {
     if (images.length === 0) return;
     const formData = new FormData();
     formData.append("image", images[0]?.file);
-    uploadSetup(formData);
+    mutation.mutate(formData);
   };
   return (
-    <div className="bg-black   w-[400px] rounded-md">
+    <div className=" bg-black w-[400px] rounded-md">
       <div className="flex justify-between items-start p-5">
         <div className="">
           <h1 className="text-xl ">Upload Setup</h1>
@@ -98,10 +109,26 @@ export default function UploadImage() {
             Cancel
           </button>
           <button
-            className="bg-green text-white py-2 px-4 flex items-center rounded-md "
+            className={`${
+              mutation.isPending ? "bg-gray" : "bg-green"
+            } text-white py-2 px-4 flex items-center rounded-md `}
             onClick={uploadImage}
+            disabled={mutation.isPending ? true : false}
           >
-            Share
+            {mutation.isPending ? (
+              <TailSpin
+                visible={true}
+                height="20"
+                width="20"
+                color="white"
+                ariaLabel="tail-spin-loading"
+                radius="1"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            ) : (
+              "Share"
+            )}
           </button>
         </div>
       </div>

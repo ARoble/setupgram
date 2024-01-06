@@ -10,7 +10,7 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-async function uploadFileToS3(file, fileName) {
+async function uploadFileToS3(file: {}, fileName: string) {
   const fileBuffer = file;
 
   const params = {
@@ -40,4 +40,16 @@ export async function POST(req: Request, res: Response) {
   await prisma.setup.create({ data: { image: fileName, userId } });
 
   return NextResponse.json({ message: "created" });
+}
+
+export async function GET(req: Request, res: Response) {
+  const setups = await prisma.setup.findMany({
+    include: {
+      user: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return NextResponse.json({ setups });
 }
