@@ -19,3 +19,15 @@ export async function fetchSetups() {
 
   return res.data.setups;
 }
+
+export async function deleteSetup(id: string) {
+  await axios.delete(`http://localhost:3000/api/setup/${id}`);
+
+  return;
+}
+
+export async function likeSetup(id: string) {
+  await axios.post(`http://localhost:3000/api/setup/like/${id}`);
+
+  return;
+}

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"; //remove package
 import AWS from "aws-sdk";
 import { getServerSession } from "next-auth/next";
@@ -14,7 +14,7 @@ async function uploadFileToS3(file: {}, fileName: string) {
   const fileBuffer = file;
 
   const params = {
-    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Bucket: process.env.AWS_S3_BUCKET_NAME as string,
     Key: `${Date.now()}-${fileName}`,
     Body: fileBuffer,
     ContentType: "image/jpg",
@@ -32,6 +32,7 @@ export async function POST(req: Request, res: Response) {
   const image = formData.get("image");
   if (!image) {
     //return response error
+    return;
   }
 
   const buffer = Buffer.from(await image.arrayBuffer());
@@ -52,4 +53,12 @@ export async function GET(req: Request, res: Response) {
     },
   });
   return NextResponse.json({ setups });
+}
+
+export async function DELETE(req: NextRequest, res: Response) {
+  const params = req.nextUrl.searchParams;
+  console.log(params);
+
+  console.log("Delete request");
+  return NextResponse.json({ message: "delete" });
 }
