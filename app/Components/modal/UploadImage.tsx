@@ -7,31 +7,29 @@ import { SlCursor } from "react-icons/sl";
 import { uploadSetup } from "@/app/Utilities/fetch";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TailSpin } from "react-loader-spinner";
+import { useSetupStore } from "@/app/Hooks/setupHook";
 
 export default function UploadImage() {
   const { setModal } = useContext(Context);
+  const { addSetup } = useSetupStore((state) => state);
   const [images, setImages] = useState<any[]>([]);
+  const [isUploading, setUploading] = useState(false);
   const maxNumber = 69;
   const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: (formData: FormData) => {
-      return uploadSetup(formData);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["setups"] });
-      setModal(false);
-    },
-  });
 
   const onChange = (imageList: []) => {
     setImages(imageList);
   };
 
-  const uploadImage = () => {
+  const uploadImage = async () => {
     if (images.length === 0) return;
+    setUploading(true);
     const formData = new FormData();
     formData.append("image", images[0]?.file);
-    mutation.mutate(formData);
+    const setup = await uploadSetup(formData);
+    addSetup(setup);
+    setUploading(false);
+    setModal(false);
   };
   return (
     <div className=" bg-black w-[400px] rounded-md">
@@ -110,12 +108,12 @@ export default function UploadImage() {
           </button>
           <button
             className={`${
-              mutation.isPending ? "bg-gray" : "bg-green"
+              isUploading ? "bg-gray" : "bg-green"
             } text-white py-2 px-4 flex items-center rounded-md `}
             onClick={uploadImage}
-            disabled={mutation.isPending ? true : false}
+            disabled={isUploading ? true : false}
           >
-            {mutation.isPending ? (
+            {isUploading ? (
               <TailSpin
                 visible={true}
                 height="20"

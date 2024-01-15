@@ -38,9 +38,15 @@ export async function POST(req: Request, res: Response) {
   const buffer = Buffer.from(await image.arrayBuffer());
   const fileName = await uploadFileToS3(buffer, image.name);
 
-  await prisma.setup.create({ data: { image: fileName, userId } });
+  const setup = await prisma.setup.create({
+    data: { image: fileName, userId },
+    include: {
+      user: true,
+      likes: true,
+    },
+  });
 
-  return NextResponse.json({ message: "created" });
+  return NextResponse.json({ setup });
 }
 
 export async function GET(req: Request, res: Response) {

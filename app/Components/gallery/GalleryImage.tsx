@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdHeart } from "react-icons/io";
 import User from "./User";
 import Skeleton from "react-loading-skeleton";
@@ -9,6 +9,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { deleteSetup, likeSetup } from "@/app/Utilities/fetch";
+import { useSetupStore } from "@/app/Hooks/setupHook";
 export default function GalleryImage({
   setup,
 }: {
@@ -16,33 +17,38 @@ export default function GalleryImage({
     id: string;
     image: string;
     user: UserProps;
+    userId: string;
     likes: [];
   };
 }) {
   const [display, setDisplay] = useState("hidden");
   const [loading, setLoading] = useState(true);
+  const { deleteSetupp, addLike, removeLike, setups } = useSetupStore(
+    (state) => state
+  );
   const { data: session, status } = useSession();
 
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => {
-      return deleteSetup(id);
-    },
-  });
-  const likeMutation = useMutation({
-    mutationFn: (id: string) => {
-      return likeSetup(id);
-    },
-  });
+  const hasLiked = () => {
+    const liked = setup.likes.some((setup) => setup.userId == session?.user.id);
+    return liked;
+  };
 
   const handleOnDelete = (id: string) => {
-    console.log("deleting");
-
-    deleteMutation.mutate(id);
+    deleteSetup(id);
+    deleteSetupp(id);
   };
 
-  const handleOnLike = (id: string) => {
-    likeMutation.mutate(id);
+  const handleOnLike = async (id: string) => {
+    const like = await likeSetup(id);
+
+    if (hasLiked()) {
+      const userId = session?.user.id;
+      removeLike(id, userId, setup.id);
+    } else {
+      addLike(like, setup.id);
+    }
   };
+
   return (
     <motion.div
       className="hover:cursor-pointer relative "
@@ -78,16 +84,19 @@ export default function GalleryImage({
           className={`absolute inset-0 flex justify-center items-center ${display} z-40`}
           onClick={() => handleOnLike(setup.id)}
         >
-          <IoMdHeart size={80} className="opacity-1 hover:text-red z-40" />
+          <IoMdHeart
+            size={80}
+            className={`opacity-1  z-40 hover:text-red ${
+              hasLiked() && "text-red "
+            }`}
+          />
         </div>
       )}
       <User display={display} userInfo={setup.user} />
       <div className="absolute bottom-1 right-1 flex items-center">
         <IoMdHeart
           size={17}
-          className={`opacity-1 z-40 mr-1 ${
-            setup.likes.length > 0 && "text-red"
-          }`}
+          className={`opacity-1 z-40 mr-1 ${hasLiked() && "text-red"}`}
         />
         <p className="text-sm">{setup.likes.length}</p>
       </div>

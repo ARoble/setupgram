@@ -1,17 +1,27 @@
 import GalleryImage from "./GalleryImage";
 import AddButton from "./AddButton";
 import { fetchSetups } from "@/app/Utilities/fetch";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SetupProps } from "../../Types/SetupProps";
+import { useSetupStore } from "../../Hooks/setupHook";
+import { useEffect } from "react";
+import Loading from "../Loading";
 export default function GalleryGrid() {
-  const { isLoading, data: setups } = useQuery({
-    queryKey: ["setups"],
-    queryFn: () => fetchSetups(),
-  });
-  console.log(setups);
+  const setups = useSetupStore((state) => state.setups);
+  const loadData = useSetupStore((state) => state.loadData);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  const { isLoading, data } = useQuery({
+    queryKey: ["setups"],
+    queryFn: async () => {
+      const data = await fetchSetups();
+      loadData(data);
+      return data;
+    },
+  });
+
+  if (isLoading) return <Loading />;
   return (
     <div className="">
       <div className="columns-1 sm:columns-2 md:columns-2 lg:columns-3 gap-4 space-y-4 p-3 md:p-0 ">

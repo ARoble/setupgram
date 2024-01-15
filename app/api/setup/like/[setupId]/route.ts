@@ -15,8 +15,10 @@ export async function POST(req: NextRequest, context: any) {
   });
 
   if (!foundLike) {
-    await prisma.likes.create({ data: { userId, setupId: params.setupId } });
-    return NextResponse.json({ message: "Liked" });
+    const like = await prisma.likes.create({
+      data: { userId, setupId: params.setupId },
+    });
+    return NextResponse.json({ like });
   }
 
   await prisma.likes.deleteMany({

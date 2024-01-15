@@ -10,7 +10,7 @@ export async function uploadSetup(formData: FormData) {
     },
   });
 
-  return;
+  return res.data.setup;
 }
 
 export async function fetchSetups() {
@@ -26,7 +26,7 @@ export async function deleteSetup(id: string) {
 }
 
 export async function likeSetup(id: string) {
-  await axios.post(`http://localhost:3000/api/setup/like/${id}`);
+  const res = await axios.post(`http://localhost:3000/api/setup/like/${id}`);
 
-  return;
+  return res.data.like ? res.data.like : undefined;
 }

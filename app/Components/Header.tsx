@@ -3,10 +3,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useEffect } from "react";
+
 import Image from "next/image";
 export default function Header() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status == "loading") return;
 
   return (
     <div className="flex justify-between items-center py-8">
