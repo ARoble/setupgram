@@ -47,6 +47,7 @@ export async function GET(req: Request, res: Response) {
   const setups = await prisma.setup.findMany({
     include: {
       user: true,
+      likes: true,
     },
     orderBy: {
       createdAt: "desc",

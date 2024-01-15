@@ -9,7 +9,6 @@ export async function uploadSetup(formData: FormData) {
       return Math.round(100 * event.loaded) / event.total!;
     },
   });
-  console.log(res);
 
   return;
 }

@@ -16,6 +16,7 @@ export default function GalleryImage({
     id: string;
     image: string;
     user: UserProps;
+    likes: [];
   };
 }) {
   const [display, setDisplay] = useState("hidden");
@@ -34,14 +35,12 @@ export default function GalleryImage({
   });
 
   const handleOnDelete = (id: string) => {
-    console.log("hi");
+    console.log("deleting");
 
     deleteMutation.mutate(id);
   };
 
   const handleOnLike = (id: string) => {
-    console.log("mutating");
-
     likeMutation.mutate(id);
   };
   return (
@@ -83,6 +82,15 @@ export default function GalleryImage({
         </div>
       )}
       <User display={display} userInfo={setup.user} />
+      <div className="absolute bottom-1 right-1 flex items-center">
+        <IoMdHeart
+          size={17}
+          className={`opacity-1 z-40 mr-1 ${
+            setup.likes.length > 0 && "text-red"
+          }`}
+        />
+        <p className="text-sm">{setup.likes.length}</p>
+      </div>
     </motion.div>
   );
 }

@@ -9,6 +9,7 @@ export default function GalleryGrid() {
     queryKey: ["setups"],
     queryFn: () => fetchSetups(),
   });
+  console.log(setups);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (

@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/app/Utilities/prisma";
-import { log } from "console";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -31,7 +30,7 @@ export const authOptions = {
       }
       return true;
     },
-    async session({ session, token, user }) {
+    async session({ session }) {
       const foundUser = await prisma.user.findFirst({
         where: { email: session.user.email },
       });
@@ -39,6 +38,7 @@ export const authOptions = {
       if (foundUser) {
         session.user.id = foundUser.id;
       }
+      // foundUser ? (session.user.id = foundUser.id) : undefined;
 
       return session;
     },
