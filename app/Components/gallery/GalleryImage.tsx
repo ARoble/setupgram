@@ -11,17 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteSetup, likeSetup } from "@/app/Utilities/fetch";
 import { useSetupStore } from "@/app/Hooks/setupHook";
 import { SetupProps } from "@/app/Types/SetupProps";
-export default function GalleryImage({
-  setup,
-}: {
-  setup: {
-    id: string;
-    image: string;
-    user: UserProps;
-    userId: string;
-    likes: [];
-  };
-}) {
+export default function GalleryImage({ setup }: { setup: {} }) {
   const [display, setDisplay] = useState("hidden");
   const [loading, setLoading] = useState(true);
   const { deleteSetupp, addLike, removeLike, setups } = useSetupStore(
