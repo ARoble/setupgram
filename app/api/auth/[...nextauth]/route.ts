@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/app/Utilities/prisma";
 
-export const authOptions = {
+const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -31,6 +31,7 @@ export const authOptions = {
       return true;
     },
     async session({ session }) {
+      // if(!session.user) return session
       const foundUser = await prisma.user.findFirst({
         where: { email: session.user.email },
       });
