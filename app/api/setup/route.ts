@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"; //remove package
 import AWS from "aws-sdk";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
+// import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/app/Utilities/authOptions";
 import prisma from "@/app/Utilities/prisma";
 
 const s3 = new AWS.S3({
