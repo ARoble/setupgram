@@ -1,4 +1,4 @@
-import { UserProps } from "../../Types/UserProps";
+import { UserProps } from "@/app/Types/SetupProps";
 export default function User({
   display,
   userInfo,

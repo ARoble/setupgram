@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteSetup, likeSetup } from "@/app/Utilities/fetch";
 import { useSetupStore } from "@/app/Hooks/setupHook";
 import { SetupProps } from "@/app/Types/SetupProps";
-export default function GalleryImage({ setup }: { setup: {} }) {
+export default function GalleryImage({ setup }: { setup: SetupProps }) {
   const [display, setDisplay] = useState("hidden");
   const [loading, setLoading] = useState(true);
   const { deleteSetupp, addLike, removeLike, setups } = useSetupStore(
@@ -20,6 +20,7 @@ export default function GalleryImage({ setup }: { setup: {} }) {
   const { data: session, status } = useSession();
 
   const hasLiked = () => {
+    if (!setup.likes) return 0;
     const liked = setup.likes.some((setup) => setup.userId == session?.user.id);
     return liked;
   };
@@ -84,7 +85,7 @@ export default function GalleryImage({ setup }: { setup: {} }) {
           />
         </div>
       )}
-      <User display={display} userInfo={setup.user} />
+      <User display={display} userInfo={setup.user!} />
       <div className="absolute bottom-1 right-1 flex items-center">
         <IoMdHeart
           size={17}
