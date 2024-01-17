@@ -27,13 +27,15 @@ async function uploadFileToS3(file: {}, fileName: string) {
 
 export async function POST(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: "Not auth" });
+  }
   const userId = session.user.id;
 
   const formData = await req.formData();
   const image = formData.get("image");
   if (!image) {
-    //return response error
-    return;
+    return NextResponse.json({ error: "Please select image" });
   }
 
   const buffer = Buffer.from(await image.arrayBuffer());
