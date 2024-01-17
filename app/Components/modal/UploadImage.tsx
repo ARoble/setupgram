@@ -50,14 +50,13 @@ export default function UploadImage() {
       <div className="py-5">
         <ImageUploading
           value={images}
-          onChange={onChange}
+          onChange={() => onChange}
           maxNumber={1}
           dataURLKey="data_url"
         >
           {({
             imageList,
             onImageUpload,
-
             onImageRemove,
             isDragging,
             dragProps,
