@@ -11,16 +11,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({
-      user,
-    }: {
-      user: {
-        id: string | undefined;
-        email: string;
-        image: string;
-        name: string;
-      };
-    }) {
+    async signIn({ user }: any) {
       const foundUser = await prisma.user.findFirst({
         where: { email: user.email },
       });
