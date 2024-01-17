@@ -1,8 +1,8 @@
 export type SetupProps = {
   id: string;
   image: string;
-  user?: UserProps;
-  likes?: LikeProps[];
+  user: UserProps;
+  likes: LikeProps[];
 };
 
 export type UserProps = {

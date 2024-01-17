@@ -32,6 +32,7 @@ export const authOptions: AuthOptions = {
     },
     async session({ session }) {
       // if(!session.user) return session
+
       const foundUser = await prisma.user.findFirst({
         where: { email: session.user.email },
       });

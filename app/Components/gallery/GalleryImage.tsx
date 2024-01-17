@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteSetup, likeSetup } from "@/app/Utilities/fetch";
 import { useSetupStore } from "@/app/Hooks/setupHook";
 import { SetupProps } from "@/app/Types/SetupProps";
+import RemoveButton from "./RemoveButton";
 export default function GalleryImage({ setup }: { setup: SetupProps }) {
   const [display, setDisplay] = useState("hidden");
   const [loading, setLoading] = useState(true);
@@ -64,14 +65,8 @@ export default function GalleryImage({ setup }: { setup: SetupProps }) {
           setLoading(false);
         }}
       />
-      {session?.user?.id === setup.user.id && (
-        <button
-          className="absolute top-1 right-1 bg-white text-primary p-1 rounded-sm z-40"
-          onClick={() => handleOnDelete(setup.id)}
-        >
-          <IoTrashOutline size={16} color="red" />
-        </button>
-      )}
+      <RemoveButton handleOnDelete={handleOnDelete} setup={setup} />
+
       {session?.user?.id != setup.user.id && (
         <div
           className={`absolute inset-0 flex justify-center items-center ${display} z-40`}
