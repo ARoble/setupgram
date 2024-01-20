@@ -32,7 +32,9 @@ export default function Header() {
             className="flex items-center px-3 py-2.5 bg-secondary text-primary rounded-full text-sm "
             onClick={() => signIn("google")}
           >
-            <FcGoogle size={25} className="mr-3" /> Sign in with Google
+            <FcGoogle size={25} className="mr-3" />
+            <h2 className="block md:hidden">Sign in </h2>
+            <h2 className="hidden md:block">Sign in with Google</h2>
           </button>
         )}
       </div>

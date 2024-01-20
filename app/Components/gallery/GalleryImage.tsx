@@ -12,7 +12,10 @@ import { deleteSetup, likeSetup } from "@/app/Utilities/fetch";
 import { useSetupStore } from "@/app/Hooks/setupHook";
 import { SetupProps } from "@/app/Types/SetupProps";
 import RemoveButton from "./RemoveButton";
+import { useContext } from "react";
+import { Context } from "@/app/Hooks/context";
 export default function GalleryImage({ setup }: { setup: SetupProps }) {
+  const { setModal } = useContext(Context);
   const [display, setDisplay] = useState("hidden");
   const [loading, setLoading] = useState(true);
   const { deleteSetupp, addLike, removeLike, setups } = useSetupStore(
@@ -32,7 +35,7 @@ export default function GalleryImage({ setup }: { setup: SetupProps }) {
   };
 
   const handleOnLike = async (id: string) => {
-    if (!session) return;
+    if (!session) return setModal(true);
     const like = await likeSetup(id);
 
     if (hasLiked()) {

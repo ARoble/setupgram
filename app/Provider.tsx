@@ -14,7 +14,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <SessionProvider>
             <div className=" flex justify-center ">
-              <div className="md:w-2/3">{children}</div>
+              <div className="md:w-2/3 px-5 md:px-0">{children}</div>
             </div>
           </SessionProvider>
         </QueryClientProvider>
