@@ -13,6 +13,9 @@ export async function DELETE(req: NextRequest, context: any) {
     const { id } = params;
 
     const setup = await prisma.setup.findFirst({ where: { id } });
+    if (!setup) {
+      return NextResponse.json({ message: "Setup not found" });
+    }
     const splitImage = setup?.image.split("/");
     const imageKey = splitImage[splitImage?.length - 1];
 
