@@ -33,7 +33,9 @@ export async function POST(req: Request, res: Response) {
   const userId = session.user.id;
 
   const formData = await req.formData();
-  const image = formData.get("image");
+
+  const image = formData.get("image") as File;
+
   if (!image) {
     return NextResponse.json({ error: "Please select image" });
   }
